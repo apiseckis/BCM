@@ -1,0 +1,38 @@
+﻿@page "/"
+
+<PageTitle>Home</PageTitle>
+
+<div>
+    <button class="btn btn-primary" @onclick="Toggle">Toggle</button>
+
+    @if (IsToggled)
+    {
+        <div>Suck my ass</div>
+
+    }
+
+</div>
+
+
+@code{
+
+    public List<DateTime> Dates { get; set; } = [];
+
+    public bool IsToggled { get; set; }
+
+    public async Task Toggle()
+    {
+        var date = DateTime.Today.ToShortDateString();
+        await localStorage.SetItemAsync(date, "Done");
+
+
+        // var name = await localStorage.GetItemAsync<string>("name");
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var date = DateTime.Today.ToShortDateString();
+        var state = await localStorage.GetItemAsync<string>(date);
+        IsToggled = state == "Done";
+    }
+}
