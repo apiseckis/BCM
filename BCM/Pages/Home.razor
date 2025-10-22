@@ -3,18 +3,28 @@
 <PageTitle>Home</PageTitle>
 
 <div>
-    <button class="btn btn-primary" @onclick="Toggle">Toggle</button>
 
-    @if (IsToggled)
+    @{
+        var variant = IsToggled ? Variant.Filled : Variant.Outlined;
+    }
+
+    <MudIconButton Icon="@Icons.Material.Filled.Favorite" Class="full-round-button" Size="Size.Large" Color="Color.Secondary" Variant="variant" OnClick="Toggle" />
+
+@*     @if (IsToggled)
     {
-        <div>Suck my ass</div>
+        <MudFab Color="Color.Secondary" Size="Size.Large" IconSize="Size.Large" StartIcon="@Icons.Material.Filled.Favorite" />
 
     }
+    else
+    {
+        <MudFab Size="Size.Large" IconSize="Size.Large" StartIcon="@Icons.Material.Outlined.Favorite" />
+
+    } *@
 
 </div>
 
 
-@code{
+@code {
 
     public List<DateTime> Dates { get; set; } = [];
 
@@ -23,16 +33,29 @@
     public async Task Toggle()
     {
         var date = DateTime.Today.ToShortDateString();
-        await localStorage.SetItemAsync(date, "Done");
+        var initialState = await localStorage.GetItemAsync<string>(date);
 
+        if (initialState == "True")
+        {
+            await localStorage.SetItemAsync(date, "False");
 
-        // var name = await localStorage.GetItemAsync<string>("name");
+        }
+        else
+        {
+            await localStorage.SetItemAsync(date, "True");
+
+        }
+
+        var updatedState = await localStorage.GetItemAsync<string>(date);
+
+        IsToggled = updatedState == "True";
+
     }
 
     protected override async Task OnInitializedAsync()
     {
         var date = DateTime.Today.ToShortDateString();
         var state = await localStorage.GetItemAsync<string>(date);
-        IsToggled = state == "Done";
+        IsToggled = state == "True";
     }
 }

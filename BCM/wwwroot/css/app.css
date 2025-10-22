@@ -113,3 +113,23 @@ code {
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
     text-align: start;
 }
+
+.full-round-button {
+    /* Center the button horizontally */
+    display: block !important;
+    margin: 40vh auto 0 auto !important; /* 40% down the viewport for vertical centering */
+    /* Make it large and circular */
+    width: 80vw !important; /* 80% of viewport width */
+    height: 80vw !important; /* keep it square */
+    border-radius: 50% !important; /* perfectly round */
+
+    /* Optional: smooth shadow for mobile */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
+    /* Make sure the button doesn’t shrink */
+    min-width: 80vw !important;
+    min-height: 80vw !important;
+}
+
+.mud-icon-button-size-large.mud-button > .mud-icon-button-label > .mud-icon-size-large {
+    font-size: 6rem !important;
+}
